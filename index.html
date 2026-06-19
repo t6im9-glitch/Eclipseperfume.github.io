@@ -33,7 +33,8 @@
 
   /* HERO */
   .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; padding: 6rem 2rem 4rem; overflow: hidden; }
-  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 50% 60%, rgba(201,169,110,0.06) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 70% 30%, rgba(212,120,154,0.04) 0%, transparent 60%); }
+  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 50% 60%, rgba(201,169,110,0.04) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 70% 30%, rgba(212,120,154,0.03) 0%, transparent 60%); }
+  .hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
   .hero-eyebrow { font-size: 0.65rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); margin-bottom: 2rem; opacity: 0.9; }
   .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(4rem, 12vw, 9rem); font-weight: 300; line-height: 0.9; letter-spacing: -0.02em; color: var(--white); margin-bottom: 0.2em; }
   .hero-title em { font-style: italic; color: var(--gold); }
@@ -186,6 +187,7 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
+  <canvas class="hero-canvas" id="hero-canvas"></canvas>
   <p class="hero-eyebrow">Born in Aleppo · Luxury Fragrance</p>
   <h1 class="hero-title"><em>Eclipse</em><br>Perfumes</h1>
   <p class="hero-sub">Inspired by the world's finest fragrances</p>
@@ -509,6 +511,75 @@ const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 60); });
 
 renderProducts();
+
+// WIREFRAME RIBBON CANVAS
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, t = 0;
+
+  function resize() {
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Generate ribbon paths like the logo wireframe
+  function ribbonPoint(u, v, time) {
+    const twist = u * Math.PI * 4 + time * 0.18;
+    const spread = 0.55 + 0.45 * Math.sin(u * Math.PI);
+    const cx = W * 0.5 + Math.cos(twist) * W * 0.32 * spread;
+    const cy = H * 0.52 + Math.sin(twist * 0.7) * H * 0.28 * spread;
+    const ox = Math.cos(twist + Math.PI / 2) * v * W * 0.12;
+    const oy = Math.sin(twist * 0.5 + Math.PI / 2) * v * H * 0.09;
+    return { x: cx + ox, y: cy + oy };
+  }
+
+  const STEPS = 120;
+  const STRIPS = 14;
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    for (let s = 0; s < STRIPS; s++) {
+      const v = (s / (STRIPS - 1)) * 2 - 1;
+      const alpha = 0.028 - 0.012 * Math.abs(v);
+
+      ctx.beginPath();
+      for (let i = 0; i <= STEPS; i++) {
+        const u = i / STEPS;
+        const p = ribbonPoint(u, v, t);
+        if (i === 0) ctx.moveTo(p.x, p.y);
+        else ctx.lineTo(p.x, p.y);
+      }
+      ctx.strokeStyle = `rgba(255,255,255,${alpha})`;
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+    }
+
+    // Cross-lines for the mesh look
+    const CROSS = 30;
+    for (let i = 0; i <= CROSS; i++) {
+      const u = i / CROSS;
+      ctx.beginPath();
+      for (let s = 0; s <= STRIPS - 1; s++) {
+        const v = (s / (STRIPS - 1)) * 2 - 1;
+        const p = ribbonPoint(u, v, t);
+        if (s === 0) ctx.moveTo(p.x, p.y);
+        else ctx.lineTo(p.x, p.y);
+      }
+      ctx.strokeStyle = `rgba(255,255,255,0.018)`;
+      ctx.lineWidth = 0.6;
+      ctx.stroke();
+    }
+
+    t += 1;
+    requestAnimationFrame(draw);
+  }
+
+  draw();
+})();
 </script>
 </body>
 </html>
