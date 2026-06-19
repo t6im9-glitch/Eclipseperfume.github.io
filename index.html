@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "x8nxc40yil");
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Eclipse Perfumes</title>
@@ -108,8 +101,12 @@
   .cart-item-img { width: 56px; height: 70px; object-fit: cover; opacity: 0.8; flex-shrink: 0; }
   .cart-item-info { flex: 1; }
   .cart-item-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem; margin-bottom: 0.2rem; }
-  .cart-item-brand { font-size: 0.6rem; letter-spacing: 0.15em; color: var(--text-muted); }
-  .cart-item-remove { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1rem; padding: 0.2rem; transition: color 0.2s; }
+  .cart-item-brand { font-size: 0.6rem; letter-spacing: 0.15em; color: var(--text-muted); margin-bottom: 0.6rem; }
+  .cart-item-controls { display: flex; align-items: center; gap: 0; }
+  .qty-btn { background: none; border: 1px solid rgba(255,255,255,0.12); color: var(--white); width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem; line-height: 1; transition: border-color 0.2s; }
+  .qty-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .qty-val { width: 32px; height: 26px; border-top: 1px solid rgba(255,255,255,0.12); border-bottom: 1px solid rgba(255,255,255,0.12); border-left: none; border-right: none; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: var(--white); }
+  .cart-item-remove { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.1rem; padding: 0.2rem 0.2rem 0.2rem 0.6rem; transition: color 0.2s; align-self: flex-start; margin-top: 0.1rem; }
   .cart-item-remove:hover { color: #e24b4a; }
   .cart-footer { padding: 1.5rem 2rem 2rem; border-top: 1px solid rgba(255,255,255,0.06); }
   .cart-summary { display: flex; justify-content: space-between; margin-bottom: 1.5rem; font-size: 0.75rem; letter-spacing: 0.1em; }
@@ -189,14 +186,11 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
-  <p class="hero-eyebrow">Damascus · Luxury Fragrance</p>
+  <p class="hero-eyebrow">Born in Aleppo · Luxury Fragrance</p>
   <h1 class="hero-title"><em>Eclipse</em><br>Perfumes</h1>
   <p class="hero-sub">Inspired by the world's finest fragrances</p>
   <a href="#catalog" class="hero-cta">Explore Collection</a>
-  <div class="hero-scroll">
-    <div class="hero-scroll-line"></div>
-    <span>Scroll</span>
-  </div>
+
 </section>
 
 <!-- FILTER -->
@@ -239,7 +233,7 @@
 
 <footer>
   <span class="footer-logo">Eclipse Perfumes</span>
-  <span class="footer-copy">Damascus · All rights reserved</span>
+  <span class="footer-copy">Born in Aleppo · All rights reserved</span>
 </footer>
 
 <!-- CART DRAWER -->
@@ -375,12 +369,24 @@ function productCard(p) {
 function addToCart(id) {
   const product = [...menProducts, ...womenProducts].find(p => p.id === id);
   if (!product) return;
-  if (!cart.find(i => i.id === id)) {
-    cart.push(product);
+  const existing = cart.find(i => i.id === id);
+  if (existing) {
+    existing.qty += 1;
+    updateCartUI();
+  } else {
+    cart.push({ ...product, qty: 1 });
     updateCartUI();
     const btn = document.getElementById('btn-' + id);
     if (btn) { btn.textContent = 'Added ✓'; btn.classList.add('added'); }
   }
+}
+
+function changeQty(id, delta) {
+  const item = cart.find(i => i.id === id);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) { removeFromCart(id); return; }
+  updateCartUI();
 }
 
 function removeFromCart(id) {
@@ -392,11 +398,11 @@ function removeFromCart(id) {
 }
 
 function updateCartUI() {
-  const count = cart.length;
+  const totalItems = cart.reduce((sum, i) => sum + i.qty, 0);
   const countEl = document.getElementById('cart-count');
-  countEl.textContent = count;
-  countEl.classList.toggle('hidden', count === 0);
-  document.getElementById('cart-items-count').textContent = count + ' item' + (count !== 1 ? 's' : '');
+  countEl.textContent = totalItems;
+  countEl.classList.toggle('hidden', totalItems === 0);
+  document.getElementById('cart-items-count').textContent = totalItems + ' item' + (totalItems !== 1 ? 's' : '');
   renderCartItems();
 }
 
@@ -412,6 +418,11 @@ function renderCartItems() {
       <div class="cart-item-info">
         <p class="cart-item-name">${item.name}</p>
         <p class="cart-item-brand">${item.brand} · EDP 100ml</p>
+        <div class="cart-item-controls">
+          <button class="qty-btn" onclick="changeQty(${item.id}, -1)">−</button>
+          <div class="qty-val" id="qty-${item.id}">${item.qty}</div>
+          <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+        </div>
       </div>
       <button class="cart-item-remove" onclick="removeFromCart(${item.id})">×</button>
     </div>`).join('');
@@ -436,7 +447,7 @@ function openCheckout() {
   list.innerHTML = cart.map(item => `
     <div class="order-summary-item">
       <span>${item.name}</span>
-      <span>EDP 100ml</span>
+      <span>x${item.qty}</span>
     </div>`).join('');
   document.getElementById('checkout-modal').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -453,8 +464,9 @@ function submitOrder() {
   const address = document.getElementById('f-address').value.trim();
   if (!name || !phone || !address) { alert('Please fill in all fields.'); return; }
 
-  const itemsList = cart.map(i => `• ${i.name} (${i.brand}) - EDP 100ml`).join('\n');
-  const msg = `🌙 *New Order — Eclipse Perfumes*\n\n*Customer:* ${name}\n*Phone:* ${phone}\n*Address:* ${address}\n*Payment:* Cash on Delivery\n\n*Items:*\n${itemsList}\n\n*Total Items:* ${cart.length}`;
+  const itemsList = cart.map(i => `• ${i.name} (${i.brand}) - EDP 100ml x${i.qty}`).join('\n');
+  const totalQty = cart.reduce((sum, i) => sum + i.qty, 0);
+  const msg = `🌙 *New Order — Eclipse Perfumes*\n\n*Customer:* ${name}\n*Phone:* ${phone}\n*Address:* ${address}\n*Payment:* Cash on Delivery\n\n*Items:*\n${itemsList}\n\n*Total Items:* ${totalQty}`;
   const waUrl = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
 
   closeCheckout();
