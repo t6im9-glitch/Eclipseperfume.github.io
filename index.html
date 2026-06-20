@@ -6,7 +6,7 @@
 <title>Eclipse Perfumes</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&family=Noto+Naskh+Arabic:wght@400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -174,7 +174,8 @@
   @media (max-width: 600px) { .detail-inner { flex-direction: column; } .detail-img { width: 100%; height: 220px; } }
 
   .form-group { margin-bottom: 1.5rem; }
-  .form-label { display: block; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem; }
+  .form-label { display: block; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.2rem; }
+  .form-label-ar { display: block; font-family: 'Noto Naskh Arabic', serif; font-size: 0.8rem; color: rgba(122,122,122,0.7); direction: rtl; text-align: right; margin-bottom: 0.5rem; font-weight: 400; letter-spacing: 0; }
   .form-input { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: var(--white); font-family: 'Jost', sans-serif; font-size: 0.9rem; padding: 0.85rem 1rem; outline: none; transition: border-color 0.2s; }
   .form-input:focus { border-color: rgba(201,169,110,0.5); }
   .form-input::placeholder { color: var(--text-muted); font-size: 0.8rem; }
@@ -201,8 +202,8 @@
   /* ABOUT & FOOTER */
   .about { padding: 6rem 3rem; max-width: 900px; margin: 0 auto; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
   .about-eyebrow { font-size: 0.6rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); margin-bottom: 2rem; }
-  .about-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.3rem, 2.5vw, 1.7rem); font-weight: 300; line-height: 1.7; color: rgba(245,243,239,0.7); }
-  .about-text em { font-style: italic; color: var(--white); }
+  .about-text-ar { font-family: 'Noto Naskh Arabic', serif; font-size: clamp(1.2rem, 2.2vw, 1.55rem); font-weight: 400; line-height: 2.1; color: rgba(245,243,239,0.7); direction: rtl; letter-spacing: 0; }
+  .about-text-ar em { font-style: normal; color: var(--white); }
   .about-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 3.5rem auto; max-width: 200px; }
   .contact-grid { display: flex; justify-content: center; gap: 1.5px; flex-wrap: wrap; background: rgba(255,255,255,0.04); margin-bottom: 3rem; }
   .contact-card { background: var(--black); padding: 2rem 2.5rem; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; flex: 1; min-width: 180px; text-decoration: none; transition: background 0.2s; }
@@ -298,7 +299,7 @@
 <!-- ABOUT -->
 <section class="about" id="about">
   <p class="about-eyebrow">Our Philosophy</p>
-  <p class="about-text">Eclipse was born from a simple belief — that <em>luxury fragrance</em> should be within reach for everyone. Each scent in our collection is carefully crafted to capture the essence of the world's most iconic perfumes, <em>without compromise</em>.</p>
+  <p class="about-text-ar">وُلدت Eclipse من إيمان بسيط — أن <em>العطر الفاخر</em> يجب أن يكون في متناول الجميع. كل عطر في مجموعتنا صُنع بعناية ليعكس جوهر أشهر العطور العالمية، <em>دون أي تنازل</em>.</p>
 
   <div class="about-divider"></div>
 
@@ -387,10 +388,12 @@
       </div>
       <div class="form-group">
         <label class="form-label">Full Name</label>
-        <input class="form-input" type="text" id="f-name" placeholder="Your full name">
+        <label class="form-label-ar">الاسم الكامل</label>
+        <input class="form-input" type="text" id="f-name" placeholder="Your full name / اسمك الكامل">
       </div>
       <div class="form-group">
         <label class="form-label">Phone Number</label>
+        <label class="form-label-ar">رقم الهاتف</label>
         <div class="phone-group">
           <div class="country-select-wrap">
             <select class="country-select" id="f-country">
@@ -419,10 +422,12 @@
       </div>
       <div class="form-group">
         <label class="form-label">Full Address</label>
-        <input class="form-input" type="text" id="f-address" placeholder="City, Area, Street, Building">
+        <label class="form-label-ar">العنوان الكامل</label>
+        <input class="form-input" type="text" id="f-address" placeholder="City, Area, Street / المدينة، المنطقة، الشارع">
       </div>
       <div class="form-group">
         <label class="form-label">Payment Method</label>
+        <label class="form-label-ar">طريقة الدفع</label>
         <div class="payment-box">
           <span class="payment-icon">💵</span>
           <span class="payment-text">Cash on Delivery</span>
