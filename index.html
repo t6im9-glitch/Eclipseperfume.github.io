@@ -139,9 +139,12 @@
   .country-select:focus { border-color: rgba(201,169,110,0.5); }
   .country-select option { background: #111; color: var(--white); }
   .country-arrow { position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--text-muted); font-size: 0.6rem; }
-  .phone-num-input { flex: 1; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: var(--white) !important; font-family: 'Jost', sans-serif; font-size: 0.9rem; padding: 0.85rem 1rem; outline: none; transition: border-color 0.2s; caret-color: var(--gold); }
+  .phone-num-input { flex: 1; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: #f5f3ef !important; font-family: 'Jost', sans-serif; font-size: 0.9rem; padding: 0.85rem 1rem; outline: none; transition: border-color 0.2s; caret-color: var(--gold); -webkit-text-fill-color: #f5f3ef !important; }
   .phone-num-input:focus { border-color: rgba(201,169,110,0.5); }
-  .phone-num-input::placeholder { color: var(--text-muted); font-size: 0.8rem; }
+  .phone-num-input::placeholder { color: var(--text-muted); font-size: 0.8rem; -webkit-text-fill-color: var(--text-muted); }
+  .phone-num-input:-webkit-autofill,
+  .phone-num-input:-webkit-autofill:hover,
+  .phone-num-input:-webkit-autofill:focus { -webkit-text-fill-color: #f5f3ef !important; -webkit-box-shadow: 0 0 0px 1000px #111 inset !important; transition: background-color 5000s ease-in-out 0s; }
 
   /* PRODUCT DETAIL MODAL */
   .detail-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 450; display: flex; align-items: center; justify-content: center; padding: 1.5rem; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
@@ -176,9 +179,12 @@
   .form-group { margin-bottom: 1.5rem; }
   .form-label { display: block; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.2rem; }
   .form-label-ar { display: block; font-family: 'Tajawal', sans-serif; font-size: 0.8rem; color: rgba(122,122,122,0.7); direction: rtl; text-align: right; margin-bottom: 0.5rem; font-weight: 400; letter-spacing: 0; }
-  .form-input { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: var(--white) !important; font-family: 'Jost', sans-serif; font-size: 0.9rem; padding: 0.85rem 1rem; outline: none; transition: border-color 0.2s; caret-color: var(--gold); }
+  .form-input { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: #f5f3ef !important; font-family: 'Jost', sans-serif; font-size: 0.9rem; padding: 0.85rem 1rem; outline: none; transition: border-color 0.2s; caret-color: var(--gold); -webkit-text-fill-color: #f5f3ef !important; }
   .form-input:focus { border-color: rgba(201,169,110,0.5); }
-  .form-input::placeholder { color: var(--text-muted); font-size: 0.8rem; }
+  .form-input::placeholder { color: var(--text-muted); font-size: 0.8rem; -webkit-text-fill-color: var(--text-muted); }
+  .form-input:-webkit-autofill,
+  .form-input:-webkit-autofill:hover,
+  .form-input:-webkit-autofill:focus { -webkit-text-fill-color: #f5f3ef !important; -webkit-box-shadow: 0 0 0px 1000px #111 inset !important; transition: background-color 5000s ease-in-out 0s; caret-color: var(--gold); }
   .payment-box { background: rgba(201,169,110,0.06); border: 1px solid rgba(201,169,110,0.2); padding: 1rem 1.2rem; display: flex; align-items: center; gap: 0.8rem; }
   .payment-icon { font-size: 1.2rem; }
   .payment-text { font-size: 0.75rem; letter-spacing: 0.1em; color: var(--gold); }
@@ -315,7 +321,7 @@
 <!-- ABOUT -->
 <section class="about" id="about">
   <p class="about-eyebrow">Our Philosophy</p>
-  <p class="about-text-ar">وُلدت Eclipse من إيمان بسيط — أن <em>العطر الفاخر</em> يجب أن يكون في متناول الجميع. كل عطر في مجموعتنا صُنع بعناية ليعكس جوهر أشهر العطور العالمية، <em>دون أي تنازل</em>.</p>
+  <p class="about-text-ar">استُلهمت عطورنا من أشهر الروائح العالمية، وتم تصميمها لتمنح تجربة راقية تجمع بين الجودة، الأناقة، والسعر المناسب.<br><br>وُلدت <em>Eclipse</em> في <em>حلب</em>، وصُممت لمن يقدّر الأناقة والتفاصيل التي تصنع الفرق.<br><br>نهتم بكل تفصيل، من اختيار الرائحة إلى تصميم العبوة، لنقدم تجربة تليق بمن يبحث عن التميز.<br><br>الكسوف ظاهرة نادرة تلفت الأنظار وتترك أثراً لا يُنسى.<br>اخترنا اسم <em>Eclipse</em> لأننا نؤمن أن العطر يجب أن يفعل الشيء نفسه؛ أن يترك <em>حضوراً مميزاً وانطباعاً يدوم</em> حتى بعد مغادرة المكان.</p>
 
   <div class="about-divider"></div>
 
@@ -363,8 +369,8 @@
       <span class="faq-arrow">▾</span>
     </button>
     <div class="faq-answer">
-      <div class="faq-answer-inner">We currently deliver across Syria. Delivery times vary by location — typically 1 to 3 business days.</div>
-      <div class="faq-answer-inner-ar">نوصّل حالياً في جميع أنحاء سوريا. تتراوح مدة التوصيل بين يوم وثلاثة أيام عمل حسب المنطقة.</div>
+      <div class="faq-answer-inner">We currently deliver within Aleppo only. Delivery time is typically 24 to 48 hours from order confirmation.</div>
+      <div class="faq-answer-inner-ar">نوصّل حالياً داخل مدينة حلب فقط. تتراوح مدة التوصيل بين 24 و48 ساعة من تأكيد الطلب.</div>
     </div>
   </div>
 
