@@ -71,28 +71,48 @@
   .section-header-line { flex: 1; height: 1px; background: rgba(255,255,255,0.07); }
   .section-title { font-family: 'Cormorant Garamond', serif; font-size: 0.8rem; font-style: italic; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); white-space: nowrap; }
   .section-title.women { color: var(--pink); }
-  .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5px; background: rgba(255,255,255,0.04); }
+  .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2px; background: rgba(255,255,255,0.04); }
 
-  /* PRODUCT CARD */
-  .product-card { background: var(--black); cursor: pointer; transition: background 0.25s; display: flex; flex-direction: column; position: relative; overflow: hidden; }
-  .product-card:hover { background: var(--black2); }
-  .product-card:hover .product-img-inner { transform: scale(1.04); }
-  .product-img { aspect-ratio: 3/4; overflow: hidden; position: relative; background: var(--black3); }
-  .product-img-inner { width: 100%; height: 100%; transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-  .product-img img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; }
-  .product-tag { position: absolute; top: 1rem; left: 1rem; font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase; padding: 0.3rem 0.7rem; border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.4); }
-  .product-tag.women { border-color: rgba(212,120,154,0.3); color: var(--pink); }
-  .product-info { padding: 1.5rem 1.5rem 2rem; flex: 1; display: flex; flex-direction: column; }
-  .product-inspired { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.4rem; }
-  .product-name { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 400; color: var(--white); line-height: 1.2; margin-bottom: 0.4rem; }
+  /* PRODUCT CARD — HOVER OVERLAY */
+  .product-card { background: var(--black); cursor: pointer; position: relative; overflow: hidden; aspect-ratio: 3/4; }
+  .product-card:hover .product-img-inner { transform: scale(1.07); }
+  .product-card:hover .product-overlay { opacity: 1; }
+  .product-card:hover .product-overlay-content { transform: translateY(0); opacity: 1; }
+  .product-img { position: absolute; inset: 0; background: var(--black3); }
+  .product-img-inner { width: 100%; height: 100%; transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+  .product-img img { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; }
+  .product-tag { position: absolute; top: 1rem; left: 1rem; z-index: 2; font-size: 0.5rem; letter-spacing: 0.28em; text-transform: uppercase; padding: 0.28rem 0.65rem; border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.5); background: rgba(0,0,0,0.3); backdrop-filter: blur(4px); }
+  .product-tag.women { border-color: rgba(212,120,154,0.4); color: var(--pink); }
+  .product-static-info { position: absolute; bottom: 0; left: 0; right: 0; z-index: 2; padding: 1.5rem 1.2rem 1.2rem; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%); pointer-events: none; }
+  .product-inspired { font-size: 0.52rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 0.2rem; }
+  .product-name { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; color: var(--white); line-height: 1.15; }
   .product-name.women { color: var(--pink-light); }
-  .product-brand { font-size: 0.65rem; letter-spacing: 0.15em; color: var(--text-muted); font-style: italic; margin-bottom: 1.2rem; }
-  .product-footer { display: flex; align-items: center; justify-content: space-between; margin-top: auto; gap: 0.8rem; }
-  .product-size { font-size: 0.65rem; letter-spacing: 0.15em; color: var(--gold-dim); white-space: nowrap; }
-  .add-to-cart-btn { flex: 1; background: none; border: 1px solid rgba(255,255,255,0.12); color: var(--white); font-family: 'Jost', sans-serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.55rem 0.5rem; cursor: pointer; transition: all 0.25s; }
-  .add-to-cart-btn:hover { background: rgba(201,169,110,0.1); border-color: var(--gold); color: var(--gold); }
-  .add-to-cart-btn.women:hover { background: rgba(212,120,154,0.1); border-color: var(--pink); color: var(--pink); }
-  .add-to-cart-btn.added { background: rgba(201,169,110,0.15); border-color: var(--gold); color: var(--gold); }
+  .product-brand { font-size: 0; }
+  .product-overlay { position: absolute; inset: 0; z-index: 3; background: rgba(0,0,0,0.72); backdrop-filter: blur(2px); opacity: 0; transition: opacity 0.35s ease; display: flex; align-items: flex-end; }
+  .product-overlay-content { width: 100%; padding: 2rem 1.5rem; transform: translateY(12px); opacity: 0; transition: transform 0.35s ease, opacity 0.35s ease; }
+  .overlay-inspired { font-size: 0.52rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 0.25rem; }
+  .overlay-name { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; color: var(--white); line-height: 1.1; margin-bottom: 0.2rem; }
+  .overlay-name.women { color: var(--pink-light); }
+  .overlay-brand { font-size: 0.6rem; letter-spacing: 0.12em; color: var(--text-muted); font-style: italic; margin-bottom: 1.2rem; }
+  .overlay-size { font-size: 0.58rem; letter-spacing: 0.15em; color: var(--gold-dim); margin-bottom: 1rem; display: block; }
+  .overlay-btns { display: flex; gap: 0.6rem; }
+  .add-to-cart-btn { flex: 1; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: var(--white); font-family: 'Jost', sans-serif; font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.7rem 0.5rem; cursor: pointer; transition: all 0.25s; }
+  .add-to-cart-btn:hover { background: rgba(201,169,110,0.15); border-color: var(--gold); color: var(--gold); }
+  .add-to-cart-btn.women:hover { background: rgba(212,120,154,0.15); border-color: var(--pink); color: var(--pink); }
+  .add-to-cart-btn.added { background: rgba(201,169,110,0.2); border-color: var(--gold); color: var(--gold); }
+  .overlay-detail-btn { background: none; border: 1px solid rgba(255,255,255,0.12); color: var(--text-muted); font-family: 'Jost', sans-serif; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.7rem 0.9rem; cursor: pointer; transition: all 0.25s; white-space: nowrap; }
+  .overlay-detail-btn:hover { border-color: rgba(255,255,255,0.3); color: var(--white); }
+
+  .overlay-size-select { display: flex; gap: 0.4rem; margin-bottom: 1rem; }
+  .size-opt { background: none; border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.5); font-family: 'Jost', sans-serif; font-size: 0.58rem; letter-spacing: 0.15em; padding: 0.4rem 0.75rem; cursor: pointer; transition: all 0.2s; }
+  .size-opt.active { border-color: var(--gold); color: var(--gold); background: rgba(201,169,110,0.08); }
+  .size-opt.active.women { border-color: var(--pink); color: var(--pink); background: rgba(212,120,154,0.08); }
+  .overlay-price { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--white); margin-bottom: 1rem; letter-spacing: 0.05em; }
+  .overlay-price span { font-size: 0.7rem; font-family: 'Jost', sans-serif; color: var(--gold); letter-spacing: 0.1em; margin-left: 0.3rem; }
+
+  .product-info { display: none; }
+  .product-footer { display: none; }
+  .product-size { display: none; }
   .catalog-section.hidden { display: none; }
 
   /* CART DRAWER */
@@ -450,9 +470,10 @@
   <div class="cart-items" id="cart-items-list">
     <p class="cart-empty">Your cart is empty</p>
   </div>
-  <div class="cart-footer">
-    <div class="cart-summary">
-      <span class="cart-items-count" id="cart-items-count">0 items</span>
+  <div class="cart-footer" style="border-top:1px solid rgba(255,255,255,0.06)">
+    <div class="cart-summary" style="flex-direction:column;gap:0.6rem">
+      <div style="display:flex;justify-content:space-between"><span class="cart-items-count" id="cart-items-count">0 items</span></div>
+      <div id="cart-total-row" style="display:none;justify-content:space-between;align-items:center"><span style="font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted)">Total</span><span id="cart-total-val" style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--gold)">$0</span></div>
     </div>
     <button class="checkout-btn" onclick="openCheckout()">Proceed to Checkout</button>
   </div>
@@ -536,27 +557,27 @@
 const WHATSAPP = '96176962361';
 
 const menProducts = [
-  { id: 1, name: 'Stronger With You Absolutely', brand: 'Giorgio Armani', img: 'https://images.unsplash.com/photo-1541643600914-78b084683702?w=400&q=80', gender: 'men' },
-  { id: 2, name: 'Hawas', brand: 'Rasasi Lattafa', img: 'https://images.unsplash.com/photo-1594035910387-fea47794261f?w=400&q=80', gender: 'men' },
-  { id: 3, name: 'Khamra', brand: 'Lattafa', img: 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=400&q=80', gender: 'men' },
-  { id: 4, name: 'Le Male', brand: 'Jean Paul Gaultier', img: 'https://images.unsplash.com/photo-1590736969596-4df1d7e9a423?w=400&q=80', gender: 'men' },
-  { id: 5, name: 'Lover', brand: 'Jean Paul Gaultier', img: 'https://images.unsplash.com/photo-1547887538-047f814d3679?w=400&q=80', gender: 'men' },
-  { id: 6, name: 'Bleu de Chanel', brand: 'Chanel', img: 'https://images.unsplash.com/photo-1616949755610-8c9bbc08f138?w=400&q=80', gender: 'men' },
-  { id: 7, name: 'Darej', brand: 'Rasasi', img: 'https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=400&q=80', gender: 'men' },
-  { id: 8, name: 'Baccarat Rouge 540', brand: 'Maison Francis Kurkdjian', img: 'https://images.unsplash.com/photo-1560393464-5c69a73c5770?w=400&q=80', gender: 'men' },
-  { id: 9, name: 'Sauvage', brand: 'Christian Dior', img: 'https://images.unsplash.com/photo-1541643600914-78b084683702?w=400&q=80', gender: 'men' },
-  { id: 10, name: 'Silver Scent', brand: 'Jacques Bogart', img: 'https://images.unsplash.com/photo-1594035910387-fea47794261f?w=400&q=80', gender: 'men' },
-  { id: 11, name: 'Acqua di Giò', brand: 'Giorgio Armani', img: 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=400&q=80', gender: 'men' },
-  { id: 12, name: '212 VIP', brand: 'Carolina Herrera', img: 'https://images.unsplash.com/photo-1590736969596-4df1d7e9a423?w=400&q=80', gender: 'men' },
-  { id: 13, name: 'Armani Code', brand: 'Giorgio Armani', img: 'https://images.unsplash.com/photo-1547887538-047f814d3679?w=400&q=80', gender: 'men' },
+  { id: 1, name: 'Vanilla Sex', brand: 'Tom Ford', img: 'https://images.unsplash.com/photo-1541643600914-78b084683702?w=400&q=80', gender: 'men' },
+  { id: 2, name: 'One Million Lucky', brand: 'Paco Rabanne', img: 'https://images.unsplash.com/photo-1594035910387-fea47794261f?w=400&q=80', gender: 'men' },
+  { id: 3, name: 'Sauvage', brand: 'Christian Dior', img: 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=400&q=80', gender: 'men' },
+  { id: 4, name: '212 VIP', brand: 'Carolina Herrera', img: 'https://images.unsplash.com/photo-1590736969596-4df1d7e9a423?w=400&q=80', gender: 'men' },
+  { id: 5, name: 'The One', brand: 'Dolce & Gabbana', img: 'https://images.unsplash.com/photo-1547887538-047f814d3679?w=400&q=80', gender: 'men' },
+  { id: 6, name: 'Silver Scent', brand: 'Jacques Bogart', img: 'https://images.unsplash.com/photo-1616949755610-8c9bbc08f138?w=400&q=80', gender: 'men' },
+  { id: 7, name: 'Armani Code', brand: 'Giorgio Armani', img: 'https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=400&q=80', gender: 'men' },
+  { id: 8, name: 'Bleu de Chanel', brand: 'Chanel', img: 'https://images.unsplash.com/photo-1560393464-5c69a73c5770?w=400&q=80', gender: 'men' },
+  { id: 9, name: 'Hawas', brand: 'Lattafa', img: 'https://images.unsplash.com/photo-1615634260167-c8cdede054de?w=400&q=80', gender: 'men' },
+  { id: 10, name: 'Stronger With You Intensely', brand: 'Giorgio Armani', img: 'https://images.unsplash.com/photo-1563170351-be82bc888aa4?w=400&q=80', gender: 'men' },
+  { id: 11, name: 'Le Male', brand: 'Jean Paul Gaultier', img: 'https://images.unsplash.com/photo-1588514912908-3b4c2a89e6ac?w=400&q=80', gender: 'men' },
+  { id: 12, name: 'Y', brand: 'Yves Saint Laurent', img: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&q=80', gender: 'men' },
+  { id: 13, name: 'Baccarat Rouge 540', brand: 'Maison Francis Kurkdjian', img: 'https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=400&q=80', gender: 'men' },
 ];
 
 const womenProducts = [
-  { id: 14, name: 'La Vie Est Belle', brand: 'Lancôme', img: 'https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?w=400&q=80', gender: 'women' },
-  { id: 15, name: "J'adore", brand: 'Christian Dior', img: 'https://images.unsplash.com/photo-1615634260167-c8cdede054de?w=400&q=80', gender: 'women' },
-  { id: 16, name: 'Sì', brand: 'Giorgio Armani', img: 'https://images.unsplash.com/photo-1563170351-be82bc888aa4?w=400&q=80', gender: 'women' },
-  { id: 17, name: 'Burberry Her', brand: 'Burberry', img: 'https://images.unsplash.com/photo-1588514912908-3b4c2a89e6ac?w=400&q=80', gender: 'women' },
-  { id: 18, name: 'Black Opium', brand: 'Yves Saint Laurent', img: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&q=80', gender: 'women' },
+  { id: 14, name: 'Burberry Her', brand: 'Burberry', img: 'https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?w=400&q=80', gender: 'women' },
+  { id: 15, name: 'La Vie Est Belle', brand: 'Lancôme', img: 'https://images.unsplash.com/photo-1547887538-047f814d3679?w=400&q=80', gender: 'women' },
+  { id: 16, name: 'Sì', brand: 'Giorgio Armani', img: 'https://images.unsplash.com/photo-1616949755610-8c9bbc08f138?w=400&q=80', gender: 'women' },
+  { id: 17, name: 'Black Opium', brand: 'Yves Saint Laurent', img: 'https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=400&q=80', gender: 'women' },
+  { id: 18, name: "J'adore", brand: 'Christian Dior', img: 'https://images.unsplash.com/photo-1560393464-5c69a73c5770?w=400&q=80', gender: 'women' },
   { id: 19, name: 'Eilish', brand: 'Billie Eilish', img: 'https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=400&q=80', gender: 'women' },
 ];
 
@@ -565,8 +586,8 @@ let cart = [];
 function renderProducts() {
   const menGrid = document.getElementById('grid-men');
   const womenGrid = document.getElementById('grid-women');
-  menGrid.innerHTML = menProducts.map(p => productCard(p)).join('');
-  womenGrid.innerHTML = womenProducts.map(p => productCard(p)).join('');
+  menGrid.innerHTML = menProducts.map((p, i) => productCard(p, i)).join('');
+  womenGrid.innerHTML = womenProducts.map((p, i) => productCard(p, i)).join('');
 
   document.querySelectorAll('.product-card').forEach((card, i) => {
     card.style.opacity = '0';
@@ -576,56 +597,101 @@ function renderProducts() {
   });
 }
 
-function productCard(p) {
+function productCard(p, index) {
   const isWomen = p.gender === 'women';
   return `
     <div class="product-card" data-gender="${p.gender}">
-      <div class="product-img" style="cursor:pointer;${isWomen ? 'background:linear-gradient(135deg,#1a0a0f,#2a1020)' : ''}" onclick="openDetail(${p.id})">
+      <div class="product-img" style="${isWomen ? 'background:linear-gradient(135deg,#1a0a0f,#2a1020)' : ''}">
         <div class="product-img-inner">
           <img src="${p.img}" alt="${p.name}" loading="lazy">
         </div>
-        <span class="product-tag ${isWomen ? 'women' : ''}">100 ml</span>
-        <div style="position:absolute;bottom:0.8rem;right:0.8rem;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.35);background:rgba(0,0,0,0.5);padding:0.25rem 0.6rem;border:1px solid rgba(255,255,255,0.08)">View Details</div>
       </div>
-      <div class="product-info">
+      <span class="product-tag ${isWomen ? 'women' : ''}">EDP</span>
+      <div class="product-static-info">
         <p class="product-inspired">Inspired by</p>
-        <h3 class="product-name ${isWomen ? 'women' : ''}" style="cursor:pointer" onclick="openDetail(${p.id})">${p.name}</h3>
-        <p class="product-brand">${p.brand} · Eclipse Edition</p>
-        <div class="product-footer">
-          <span class="product-size">EDP · 100ml</span>
-          <button class="add-to-cart-btn ${isWomen ? 'women' : ''}" id="btn-${p.id}" onclick="addToCart(${p.id})">Add to Cart</button>
+        <h3 class="product-name ${isWomen ? 'women' : ''}">${p.name}</h3>
+      </div>
+      <div class="product-overlay">
+        <div class="product-overlay-content">
+          <p class="overlay-inspired">Inspired by</p>
+          <h3 class="overlay-name ${isWomen ? 'women' : ''}">${p.name}</h3>
+          <p class="overlay-brand">${p.brand} · Eclipse Edition</p>
+          <div class="overlay-size-select">
+            <button class="size-opt ${isWomen ? '' : ''}" id="size-50-${p.id}" onclick="selectSize(${p.id}, 50, event)">50ml — $6</button>
+            <button class="size-opt active ${isWomen ? 'women' : ''}" id="size-100-${p.id}" onclick="selectSize(${p.id}, 100, event)">100ml — $12</button>
+          </div>
+          <div class="overlay-price" id="price-${p.id}">$12 <span>USD</span></div>
+          <div class="overlay-btns">
+            <button class="add-to-cart-btn ${isWomen ? 'women' : ''}" id="btn-${p.id}" onclick="addToCart(${p.id})">Add to Cart</button>
+            <button class="overlay-detail-btn" onclick="openDetail(${p.id})">Details</button>
+          </div>
         </div>
       </div>
     </div>`;
 }
 
+
+const selectedSizes = {};  // id -> { ml, price }
+
+function selectSize(id, ml, e) {
+  e.stopPropagation();
+  const price = ml === 50 ? 6 : 12;
+  selectedSizes[id] = { ml, price };
+  const isWomen = [...menProducts, ...womenProducts].find(p => p.id === id)?.gender === 'women';
+
+  const btn50 = document.getElementById('size-50-' + id);
+  const btn100 = document.getElementById('size-100-' + id);
+  if (btn50 && btn100) {
+    btn50.classList.toggle('active', ml === 50);
+    btn100.classList.toggle('active', ml === 100);
+    if (isWomen) {
+      btn50.classList.toggle('women', ml === 50);
+      btn100.classList.toggle('women', ml === 100);
+    }
+  }
+  const priceEl = document.getElementById('price-' + id);
+  if (priceEl) priceEl.innerHTML = '$' + price + ' <span>USD</span>';
+
+  // update cart btn if already added
+  const cartItem = cart.find(i => i.id === id);
+  if (cartItem) {
+    cartItem.ml = ml;
+    cartItem.price = price;
+    updateCartUI();
+  }
+}
+
 function addToCart(id) {
   const product = [...menProducts, ...womenProducts].find(p => p.id === id);
   if (!product) return;
-  const existing = cart.find(i => i.id === id);
+  const sizeInfo = selectedSizes[id] || { ml: 100, price: 12 };
+  const existing = cart.find(i => i.id === id && i.ml === sizeInfo.ml);
   if (existing) {
     existing.qty += 1;
     updateCartUI();
   } else {
-    cart.push({ ...product, qty: 1 });
+    cart.push({ ...product, qty: 1, ml: sizeInfo.ml, price: sizeInfo.price });
     updateCartUI();
     const btn = document.getElementById('btn-' + id);
     if (btn) { btn.textContent = 'Added ✓'; btn.classList.add('added'); }
   }
 }
 
-function changeQty(id, delta) {
-  const item = cart.find(i => i.id === id);
+function changeQty(id, ml, delta) {
+  const item = cart.find(i => i.id === id && i.ml === ml);
   if (!item) return;
   item.qty += delta;
-  if (item.qty <= 0) { removeFromCart(id); return; }
+  if (item.qty <= 0) { removeFromCart(id, ml); return; }
   updateCartUI();
 }
 
-function removeFromCart(id) {
-  cart = cart.filter(i => i.id !== id);
-  const btn = document.getElementById('btn-' + id);
-  if (btn) { btn.textContent = 'Add to Cart'; btn.classList.remove('added'); }
+function removeFromCart(id, ml) {
+  cart = cart.filter(i => !(i.id === id && i.ml === ml));
+  const stillInCart = cart.find(i => i.id === id);
+  if (!stillInCart) {
+    const btn = document.getElementById('btn-' + id);
+    if (btn) { btn.textContent = 'Add to Cart'; btn.classList.remove('added'); }
+  }
   updateCartUI();
   renderCartItems();
 }
@@ -643,6 +709,7 @@ function renderCartItems() {
   const list = document.getElementById('cart-items-list');
   if (cart.length === 0) {
     list.innerHTML = '<p class="cart-empty">Your cart is empty</p>';
+    document.getElementById('cart-total-row').style.display = 'none';
     return;
   }
   list.innerHTML = cart.map(item => `
@@ -650,15 +717,21 @@ function renderCartItems() {
       <img class="cart-item-img" src="${item.img}" alt="${item.name}">
       <div class="cart-item-info">
         <p class="cart-item-name">${item.name}</p>
-        <p class="cart-item-brand">${item.brand} · EDP 100ml</p>
+        <p class="cart-item-brand">${item.brand} · EDP ${item.ml}ml · $${item.price} each</p>
         <div class="cart-item-controls">
-          <button class="qty-btn" onclick="changeQty(${item.id}, -1)">−</button>
-          <div class="qty-val" id="qty-${item.id}">${item.qty}</div>
-          <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+          <button class="qty-btn" onclick="changeQty(${item.id}, ${item.ml}, -1)">−</button>
+          <div class="qty-val" id="qty-${item.id}-${item.ml}">${item.qty}</div>
+          <button class="qty-btn" onclick="changeQty(${item.id}, ${item.ml}, 1)">+</button>
         </div>
       </div>
-      <button class="cart-item-remove" onclick="removeFromCart(${item.id})">×</button>
+      <div style="text-align:right;flex-shrink:0">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--gold);margin-bottom:0.3rem">$${item.price * item.qty}</div>
+        <button class="cart-item-remove" onclick="removeFromCart(${item.id}, ${item.ml})">×</button>
+      </div>
     </div>`).join('');
+  const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+  document.getElementById('cart-total-row').style.display = 'flex';
+  document.getElementById('cart-total-val').textContent = '$' + total;
 }
 
 function openCart() {
@@ -677,11 +750,12 @@ function openCheckout() {
   if (cart.length === 0) return;
   closeCart();
   const list = document.getElementById('checkout-items-list');
+  const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
   list.innerHTML = cart.map(item => `
     <div class="order-summary-item">
-      <span>${item.name}</span>
-      <span>x${item.qty}</span>
-    </div>`).join('');
+      <span>${item.name} · ${item.ml}ml x${item.qty}</span>
+      <span>$${item.price * item.qty}</span>
+    </div>`).join('') + `<div class="order-summary-item" style="border-top:1px solid rgba(255,255,255,0.08);margin-top:0.8rem;padding-top:0.8rem"><span style="color:var(--white)">Total</span><span style="color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:1.1rem">$${total}</span></div>`;
   document.getElementById('checkout-modal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -699,9 +773,10 @@ function submitOrder() {
   const address = document.getElementById('f-address').value.trim();
   if (!name || !phoneNum || !address) { alert('Please fill in all fields.'); return; }
 
-  const itemsList = cart.map(i => `• ${i.name} (${i.brand}) - EDP 100ml x${i.qty}`).join('\n');
+  const itemsList = cart.map(i => `• ${i.name} — EDP ${i.ml}ml x${i.qty} = $${i.price * i.qty}`).join('\n');
   const totalQty = cart.reduce((sum, i) => sum + i.qty, 0);
-  const msg = `🌙 *New Order — Eclipse Perfumes*\n\n*Customer:* ${name}\n*Phone:* ${phone}\n*Address:* ${address}\n*Payment:* Cash on Delivery\n\n*Items:*\n${itemsList}\n\n*Total Items:* ${totalQty}`;
+  const totalPrice = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+  const msg = `🌙 *New Order — Eclipse Perfumes*\n\n*Customer:* ${name}\n*Phone:* ${phone}\n*Address:* ${address}\n*Payment:* Cash on Delivery\n\n*Items:*\n${itemsList}\n\n*Total Items:* ${totalQty}\n*Total Price:* $${totalPrice} USD`;
   const waUrl = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
 
   closeCheckout();
@@ -759,8 +834,8 @@ function applyFilters() {
   // Filter men
   let menVisible = 0;
   document.querySelectorAll('#grid-men .product-card').forEach(card => {
-    const name = card.querySelector('.product-name').textContent.toLowerCase();
-    const brand = card.querySelector('.product-brand').textContent.toLowerCase();
+    const name = (card.querySelector('.overlay-name') || card.querySelector('.product-name') || {textContent:''}).textContent.toLowerCase();
+    const brand = (card.querySelector('.overlay-brand') || {textContent:''}).textContent.toLowerCase();
     const matchSearch = !query || name.includes(query) || brand.includes(query);
     const matchGender = activeGender === 'all' || activeGender === 'men';
     if (matchSearch && matchGender) { card.style.display = ''; menVisible++; }
@@ -770,8 +845,8 @@ function applyFilters() {
   // Filter women
   let womenVisible = 0;
   document.querySelectorAll('#grid-women .product-card').forEach(card => {
-    const name = card.querySelector('.product-name').textContent.toLowerCase();
-    const brand = card.querySelector('.product-brand').textContent.toLowerCase();
+    const name = (card.querySelector('.overlay-name') || card.querySelector('.product-name') || {textContent:''}).textContent.toLowerCase();
+    const brand = (card.querySelector('.overlay-brand') || {textContent:''}).textContent.toLowerCase();
     const matchSearch = !query || name.includes(query) || brand.includes(query);
     const matchGender = activeGender === 'all' || activeGender === 'women';
     if (matchSearch && matchGender) { card.style.display = ''; womenVisible++; }
@@ -793,24 +868,24 @@ window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', wi
 
 // PRODUCT SPECS
 const productSpecs = {
-  1: { top: ['Cardamom', 'Violet', 'Apple'], heart: ['Lavender', 'Vanilla', 'Iris'], base: ['Tonka Bean', 'Sandalwood', 'Amber'], seasons: ['Fall', 'Winter'] },
-  2: { top: ['Bergamot', 'Cardamom', 'Saffron'], heart: ['Rose', 'Jasmine', 'Iris'], base: ['Musk', 'Amber', 'Sandalwood'], seasons: ['Fall', 'Winter', 'Spring'] },
-  3: { top: ['Saffron', 'Cognac', 'Cardamom'], heart: ['Oud', 'Rose', 'Patchouli'], base: ['Amber', 'Musk', 'Sandalwood'], seasons: ['Fall', 'Winter'] },
-  4: { top: ['Lavender', 'Bergamot', 'Mint'], heart: ['Cumin', 'Cinnamon', 'Orange Blossom'], base: ['Vanilla', 'Tonka Bean', 'Musk'], seasons: ['Spring', 'Fall', 'Winter'] },
-  5: { top: ['Bergamot', 'Lemon', 'Mandarin'], heart: ['Iris', 'Vanilla', 'Lavender'], base: ['Musk', 'Sandalwood', 'Amber'], seasons: ['Spring', 'Summer', 'Fall'] },
-  6: { top: ['Grapefruit', 'Lemon', 'Mint'], heart: ['Cedar', 'Vetiver', 'Geranium'], base: ['Amber', 'Musk', 'Sandalwood'], seasons: ['All Year'] },
-  7: { top: ['Bergamot', 'Pink Pepper', 'Coriander'], heart: ['Rose', 'Oud', 'Saffron'], base: ['Amber', 'Sandalwood', 'Musk'], seasons: ['Fall', 'Winter'] },
-  8: { top: ['Saffron', 'Juicy Notes'], heart: ['Amberwood', 'Ambergris', 'Jasmine'], base: ['Fir Resin', 'Cedar', 'Musk'], seasons: ['Fall', 'Winter'] },
-  9: { top: ['Pepper', 'Bergamot', 'Lavender'], heart: ['Iris', 'Vetiver', 'Geranium'], base: ['Cedar', 'Amber', 'Musk'], seasons: ['All Year'] },
-  10: { top: ['Bergamot', 'Cardamom', 'Aldehydes'], heart: ['Cedar', 'Vetiver', 'Sandalwood'], base: ['Amber', 'Musk', 'Tonka Bean'], seasons: ['Fall', 'Winter'] },
-  11: { top: ['Bergamot', 'Neroli', 'Rosemary'], heart: ['Jasmine', 'Geranium', 'Cyclamen'], base: ['Cedar', 'Amber', 'Musk'], seasons: ['Spring', 'Summer'] },
-  12: { top: ['Grapefruit', 'Bergamot', 'Lemon'], heart: ['White Pepper', 'Cardamom', 'Rose'], base: ['Musk', 'Amber', 'Sandalwood'], seasons: ['Spring', 'Summer', 'Fall'] },
-  13: { top: ['Bergamot', 'Lemon', 'Anise'], heart: ['Jasmine', 'Geranium', 'Sage'], base: ['Cedar', 'Amber', 'Tonka Bean'], seasons: ['Fall', 'Winter'] },
-  14: { top: ['Blackcurrant', 'Pear', 'Raspberry'], heart: ['Iris', 'Jasmine', 'Praline'], base: ['Patchouli', 'Vanilla', 'Sandalwood'], seasons: ['All Year'] },
-  15: { top: ['Ylang Ylang', 'Mandarin', 'Peach'], heart: ['Jasmine', 'Rose', 'Lily'], base: ['Amber', 'Sandalwood', 'Musk'], seasons: ['Spring', 'Summer'] },
+  1:  { top: ['Bergamot', 'Vanilla', 'Spice'], heart: ['Vanilla', 'Suede', 'Sandalwood'], base: ['Musk', 'Amber', 'Tonka Bean'], seasons: ['Fall', 'Winter'] },
+  2:  { top: ['Grapefruit', 'Blood Orange', 'Mint'], heart: ['Apple', 'Cinnamon', 'Rose'], base: ['Patchouli', 'Cedar', 'Musk'], seasons: ['Spring', 'Summer'] },
+  3:  { top: ['Pepper', 'Bergamot', 'Lavender'], heart: ['Iris', 'Vetiver', 'Geranium'], base: ['Cedar', 'Amber', 'Musk'], seasons: ['All Year'] },
+  4:  { top: ['Grapefruit', 'Bergamot', 'Lemon'], heart: ['White Pepper', 'Cardamom', 'Rose'], base: ['Musk', 'Amber', 'Sandalwood'], seasons: ['Spring', 'Summer', 'Fall'] },
+  5:  { top: ['Bergamot', 'Grapefruit', 'Coriander'], heart: ['Tobacco', 'Ginger', 'Cardamom'], base: ['Amber', 'Sandalwood', 'Musk'], seasons: ['Fall', 'Winter'] },
+  6:  { top: ['Bergamot', 'Cardamom', 'Aldehydes'], heart: ['Cedar', 'Vetiver', 'Sandalwood'], base: ['Amber', 'Musk', 'Tonka Bean'], seasons: ['Fall', 'Winter'] },
+  7:  { top: ['Bergamot', 'Lemon', 'Anise'], heart: ['Jasmine', 'Geranium', 'Sage'], base: ['Cedar', 'Amber', 'Tonka Bean'], seasons: ['Fall', 'Winter'] },
+  8:  { top: ['Grapefruit', 'Lemon', 'Mint'], heart: ['Cedar', 'Vetiver', 'Geranium'], base: ['Amber', 'Musk', 'Sandalwood'], seasons: ['All Year'] },
+  9:  { top: ['Bergamot', 'Cardamom', 'Saffron'], heart: ['Rose', 'Jasmine', 'Iris'], base: ['Musk', 'Amber', 'Sandalwood'], seasons: ['Fall', 'Winter', 'Spring'] },
+  10: { top: ['Cardamom', 'Violet', 'Apple'], heart: ['Lavender', 'Vanilla', 'Iris'], base: ['Tonka Bean', 'Sandalwood', 'Amber'], seasons: ['Fall', 'Winter'] },
+  11: { top: ['Lavender', 'Bergamot', 'Mint'], heart: ['Cumin', 'Cinnamon', 'Orange Blossom'], base: ['Vanilla', 'Tonka Bean', 'Musk'], seasons: ['Spring', 'Fall', 'Winter'] },
+  12: { top: ['Bergamot', 'Ginger', 'Aldehydes'], heart: ['Geranium', 'Basil', 'Iris'], base: ['Cedar', 'Vetiver', 'Amber'], seasons: ['Spring', 'Summer', 'Fall'] },
+  13: { top: ['Saffron', 'Juicy Notes'], heart: ['Amberwood', 'Ambergris', 'Jasmine'], base: ['Fir Resin', 'Cedar', 'Musk'], seasons: ['Fall', 'Winter'] },
+  14: { top: ['Raspberry', 'Bergamot', 'Grapefruit'], heart: ['Jasmine', 'Peach', 'Violet'], base: ['Amber', 'Musk', 'Sandalwood'], seasons: ['Spring', 'Summer'] },
+  15: { top: ['Blackcurrant', 'Pear', 'Raspberry'], heart: ['Iris', 'Jasmine', 'Praline'], base: ['Patchouli', 'Vanilla', 'Sandalwood'], seasons: ['All Year'] },
   16: { top: ['Bergamot', 'Mandarin', 'Green Notes'], heart: ['Rose', 'Freesia', 'Magnolia'], base: ['Amber', 'Musk', 'Patchouli'], seasons: ['Spring', 'Summer', 'Fall'] },
-  17: { top: ['Raspberry', 'Bergamot', 'Grapefruit'], heart: ['Jasmine', 'Peach', 'Violet'], base: ['Amber', 'Musk', 'Sandalwood'], seasons: ['Spring', 'Summer'] },
-  18: { top: ['Pink Pepper', 'Orange Blossom', 'Pear'], heart: ['Coffee', 'Jasmine', 'Bitter Almond'], base: ['Patchouli', 'Vanilla', 'Cedar'], seasons: ['Fall', 'Winter'] },
+  17: { top: ['Pink Pepper', 'Orange Blossom', 'Pear'], heart: ['Coffee', 'Jasmine', 'Bitter Almond'], base: ['Patchouli', 'Vanilla', 'Cedar'], seasons: ['Fall', 'Winter'] },
+  18: { top: ['Ylang Ylang', 'Mandarin', 'Peach'], heart: ['Jasmine', 'Rose', 'Lily'], base: ['Amber', 'Sandalwood', 'Musk'], seasons: ['Spring', 'Summer'] },
   19: { top: ['Strawberry', 'Spice'], heart: ['Vanilla', 'Amber', 'Musk'], base: ['Sandalwood', 'Cashmere Wood', 'Sugar'], seasons: ['Fall', 'Winter'] },
 };
 
